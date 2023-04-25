@@ -21,11 +21,21 @@ public class Consumidor_Estante {
 		prateleira.Livros.add(livro);
 		
 		estante.prateleiras.add(prateleira);
-		System.out.println("Qtd de livros:" + estante.prateleiras.get(0));
 		
-		System.out.println(prateleira.Livros.size());
 		
-		//for (i=0; i<=prateleira.size()
-	}
+		
+		System.out.println("Qtd de livros:" + prateleira.Livros.size());
+		
+		System.out.println(prateleira.listar_titulos());
+		
+		/*System.out.println(prateleira.Livros.size());
+		
+		for (int i=0;i<prateleira.Livros.size();i++) {
+			System.out.println(prateleira.Livros.get(i));
+			
+		}
+		
+	}*/
 
 }
+	}
