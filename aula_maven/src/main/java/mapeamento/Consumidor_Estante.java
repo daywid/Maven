@@ -43,7 +43,7 @@ public class Consumidor_Estante {
 			System.out.println("Prateleira "+j + ":");
 			//navegar na prateleira
 			for (int i=0;i<estante.prateleiras.get(j).Livros.size();i++) {
-				
+				System.out.println(estante.prateleiras.get(j).Livros.get(i).titulo);
 			}
 			
 		}
