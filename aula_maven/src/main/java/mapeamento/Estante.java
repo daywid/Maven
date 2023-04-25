@@ -1,5 +1,10 @@
 package mapeamento;
 
-public class Estante {
+import java.util.ArrayList;
 
+public class Estante {
+	
+	public ArrayList<Prateleira> prateleiras = new ArrayList<Prateleira>();
+	
+	
 }
