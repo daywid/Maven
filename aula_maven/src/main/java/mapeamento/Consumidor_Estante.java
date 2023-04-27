@@ -18,8 +18,8 @@ public class Consumidor_Estante {
 		livro.autor = "Jorge Amado";
 		livro.titulo = "Capitães da Areia";
 		livro.edicao = "3a. Edição";
-		prateleira.Livros.add(livro);
 		
+		prateleira.Livros.add(livro);
 		estante.prateleiras.add(prateleira);
 		
 		System.out.println("Qtd de livros:" + prateleira.Livros.size());
