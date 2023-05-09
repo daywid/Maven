@@ -25,9 +25,8 @@ public class Conta_Corrente {
 	
 	}
 	public boolean sacar(double numero) {
-		
 		if(this.saldo<numero) {
-		
+			System.out.println("Saldo insuficiente para realizar o saque!");
 			return false;
 		}
 		else  {		
