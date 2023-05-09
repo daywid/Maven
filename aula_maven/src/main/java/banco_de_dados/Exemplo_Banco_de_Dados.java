@@ -47,8 +47,12 @@ public class Exemplo_Banco_de_Dados {
 	                // faz algo com os valores dos campos aqui...
 	            }
 				*/ 
+	            //####################################################
 	            //FIM DO EXEMPLO
 	            
+	            
+	            //EXEMPLO INSERT
+	            /*
 	            String sql = "insert into clientes(id,cpf, nome, email) values (?,?,?,?)";
 	            PreparedStatement ps = conexao.prepareStatement(sql);
 	            ps.setInt(1, 7);
@@ -57,6 +61,17 @@ public class Exemplo_Banco_de_Dados {
 	            ps.setString(4, "sergiomalandro@gmail.com");
 	            
 	            
+	            int retorno = ps.executeUpdate();
+	            System.out.println(retorno);
+	            #######################################################
+	            FIM DO EXEMPLO
+	            */
+	            
+	            String sql = "Update clientes set email = ? where cpf = ?";
+	            PreparedStatement ps = conexao.prepareStatement(sql);
+	            
+	            ps.setString(1, "pedraodoslara@gmail.com");
+	            ps.setString(2, "888");
 	            int retorno = ps.executeUpdate();
 	            System.out.println(retorno);
 	            
