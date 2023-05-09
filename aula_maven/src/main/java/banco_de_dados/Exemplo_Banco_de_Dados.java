@@ -67,6 +67,9 @@ public class Exemplo_Banco_de_Dados {
 	            FIM DO EXEMPLO
 	            */
 	            
+	            
+	            //EXEMPLO DE UPDATE
+	            /*
 	            String sql = "Update clientes set email = ? where cpf = ?";
 	            PreparedStatement ps = conexao.prepareStatement(sql);
 	            
@@ -74,6 +77,15 @@ public class Exemplo_Banco_de_Dados {
 	            ps.setString(2, "888");
 	            int retorno = ps.executeUpdate();
 	            System.out.println(retorno);
+	            */
+	            
+	            String sql = "delete from clientes where cpf = ?";
+	            PreparedStatement ps = conexao.prepareStatement(sql);
+	            
+	            ps.setString(1, "888");
+	            ps.executeUpdate();
+	            
+	            
 	            
 	            // fecha a conexão
 	            conexao.close();
