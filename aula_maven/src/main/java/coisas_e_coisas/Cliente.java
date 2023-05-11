@@ -14,7 +14,11 @@ public class Cliente {
     public String telefone;
     public String email;
  
-    public Cliente(int id, String nome, String email, String telefone) {
+    public Cliente(String nome, String endereco, String telefone, String email) {
+        this.nome = nome;
+        this.endereco = endereco;
+        this.telefone = telefone;
+        this.email = email;
     }
 
     public static Cliente find_one(int id) {
@@ -26,10 +30,10 @@ public class Cliente {
 
             if (rs.next()) {
                 return new Cliente(
-                    rs.getInt("id"),
                     rs.getString("nome"),
-                    rs.getString("email"),
-                    rs.getString("telefone")
+                    rs.getString("endereco"),
+                    rs.getString("telefone"),
+                    rs.getString("email")
                 );
             }
         } catch (SQLException e) {
@@ -42,12 +46,13 @@ public class Cliente {
         try (Connection conexao = ConexaoMySQL.getConnection()) {
             if (this.id == 0) {
                 // Inserir novo cliente
-                String sql = "INSERT INTO clientes (nome, email, telefone) VALUES (?, ?, ?)";
+                String sql = "INSERT INTO clientes (nome, endereco, telefone, email) VALUES (?, ?, ?, ?)";
                 PreparedStatement ps = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
                 
                 ps.setString(1, this.nome);
-                ps.setString(2, this.email);
+                ps.setString(2, this.endereco);
                 ps.setString(3, this.telefone);
+                ps.setString(4, this.email);
                 int retorno = ps.executeUpdate();
                 System.out.println(retorno);
 
@@ -58,12 +63,13 @@ public class Cliente {
                 }
             } else {
                 // Atualizar cliente existente
-                String sql = "UPDATE clientes SET nome = ?, email = ?, telefone = ? WHERE id = ?";
+                String sql = "UPDATE clientes SET nome = ?, endereco = ?, telefone = ?, email = ? WHERE id = ?";
                 PreparedStatement ps = conexao.prepareStatement(sql);
                 ps.setString(1, this.nome);
-                ps.setString(2, this.email);
+                ps.setString(2, this.endereco);
                 ps.setString(3, this.telefone);
-                ps.setInt(4, this.id);
+                ps.setString(4, this.email);
+                ps.setInt(5, this.id);
                 int retorno = ps.executeUpdate();
                 System.out.println(retorno);
             }

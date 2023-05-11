@@ -13,8 +13,7 @@ public class Servicos {
     public String descricao;
     public double valor;
  
-    public Servicos(int id, String nome, String descricao, double valor) {
-        this.id = id;
+    public Servicos(String nome, String descricao, double valor) {
         this.nome = nome;
         this.descricao = descricao;
         this.valor = valor;
@@ -29,7 +28,6 @@ public class Servicos {
 
             if (rs.next()) {
                 return new Servicos(
-                    rs.getInt("id"),
                     rs.getString("nome"),
                     rs.getString("descricao"),
                     rs.getDouble("valor")

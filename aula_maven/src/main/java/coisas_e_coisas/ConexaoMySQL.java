@@ -10,7 +10,7 @@ public class ConexaoMySQL {
         // informações de conexão com o MySQL
         String url = "jdbc:mysql://localhost:3306/coisas_e_coisas";
         String usuario = "root";
-        String senha = "root";
+        String senha = "positivo";
     
         try {
             // carrega o driver JDBC do MySQL
@@ -57,7 +57,7 @@ INSERT INTO servicos (nome, descricao, valor) VALUES
 ('Reparos hidráulicos', 'Realização de reparos em encanamentos e tubulações hidráulicas', 150.00),
 ('Reparos em alvenaria', 'Realização de reparos em estruturas e superfícies em alvenaria', 180.00);
 
-CREATE TABLE prestador_de_servicos (
+CREATE TABLE prestadores_de_servicos (
   id INT NOT NULL AUTO_INCREMENT,
   nome VARCHAR(255) NOT NULL,
   telefone VARCHAR(20) NOT NULL,
@@ -65,7 +65,7 @@ CREATE TABLE prestador_de_servicos (
   PRIMARY KEY (id)
 );
 
-INSERT INTO prestador_de_servicos (nome, telefone, email) VALUES
+INSERT INTO prestadores_de_servicos (nome, telefone, email) VALUES
 ('João da Silva', '(11) 9999-8888', 'joao.silva@coisasecoisas.com'),
 ('Maria dos Santos', '(11) 9888-7777', 'maria.santos@coisasecoisas.com'),
 ('Pedro Oliveira', '(11) 9777-6666', 'pedro.oliveira@coisasecoisas.com');
@@ -87,11 +87,10 @@ INSERT INTO servicos_contratados (data_atendimento, id_cliente, id_servico, valo
 ('2022-01-20', 3, 1, 150.00);
 
 
-
-
 SELECT * FROM clientes;
 SELECT * FROM servicos;
 #DROP DATABASE coisas_e_coisas;
+
 
 */
 
