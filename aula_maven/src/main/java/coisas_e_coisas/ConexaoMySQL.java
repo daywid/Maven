@@ -25,9 +25,9 @@ public class ConexaoMySQL {
 }
 
 
-    /*create database coisas_e_coisas;
+    /*CREATE DATABASE coisas_e_coisas;
 
-use coisas_e_coisas;
+USE coisas_e_coisas;
 
 CREATE TABLE clientes (
   id INT NOT NULL AUTO_INCREMENT,
@@ -37,6 +37,12 @@ CREATE TABLE clientes (
   email VARCHAR(255) NOT NULL,
   PRIMARY KEY (id)
 );
+
+INSERT INTO clientes (nome, endereco, telefone, email) VALUES 
+('João da Silva', 'Rua A, 123', '(11) 9999-8888', 'joao.silva@example.com'),
+('Ana Silva', 'Rua das Flores, 123', '(11) 98888-7777', 'ana.silva@gmail.com'),
+('José Santos', 'Avenida Paulista, 456', '(11) 97777-6666', 'jose.santos@hotmail.com');
+
 
 CREATE TABLE servicos (
   id INT NOT NULL AUTO_INCREMENT,
@@ -64,20 +70,28 @@ INSERT INTO prestador_de_servicos (nome, telefone, email) VALUES
 ('Maria dos Santos', '(11) 9888-7777', 'maria.santos@coisasecoisas.com'),
 ('Pedro Oliveira', '(11) 9777-6666', 'pedro.oliveira@coisasecoisas.com');
 
-CREATE TABLE servico_contratado (
+CREATE TABLE servicos_contratados (
   id INT NOT NULL AUTO_INCREMENT,
   data_atendimento DATE NOT NULL,
   id_cliente INT NOT NULL,
   id_servico INT NOT NULL,
   valor DECIMAL(10,2) NOT NULL,
   PRIMARY KEY (id),
-  FOREIGN KEY (id_cliente) REFERENCES Clientes(id),
-  FOREIGN KEY (id_servico) REFERENCES Servicos(id)
+  FOREIGN KEY (id_cliente) REFERENCES clientes(id),
+  FOREIGN KEY (id_servico) REFERENCES servicos(id)
 );
 
 INSERT INTO servicos_contratados (data_atendimento, id_cliente, id_servico, valor) VALUES
 ('2022-01-10', 1, 2, 100.00),
 ('2022-01-15', 2, 3, 200.00),
 ('2022-01-20', 3, 1, 150.00);
+
+
+
+
+SELECT * FROM clientes;
+SELECT * FROM servicos;
+#DROP DATABASE coisas_e_coisas;
+
 */
 
