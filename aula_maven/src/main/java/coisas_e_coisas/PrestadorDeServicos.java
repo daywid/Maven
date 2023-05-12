@@ -13,8 +13,7 @@ public class PrestadorDeServicos {
     public String telefone;
     public String email;
  
-    public PrestadorDeServicos(int id, String nome, String telefone, String email) {
-        this.id = id;
+    public PrestadorDeServicos(String nome, String telefone, String email) {
         this.nome = nome;
         this.telefone = telefone;
         this.email = email;
@@ -29,7 +28,6 @@ public class PrestadorDeServicos {
 
             if (rs.next()) {
                 return new PrestadorDeServicos(
-                    rs.getInt("id"),
                     rs.getString("nome"),
                     rs.getString("telefone"),
                     rs.getString("email")
@@ -61,7 +59,7 @@ public class PrestadorDeServicos {
                 }
             } else {
                 // Atualizar prestador de serviços existente
-                String sql = "UPDATE prestadores_de_servicos SET nome = ?, telefone = ?, email = ? WHERE id = ?";
+                String sql = "UPDATE prestador_de_servicos SET nome = ?, telefone = ?, email = ? WHERE id = ?";
                 PreparedStatement ps = conexao.prepareStatement(sql);
                 ps.setString(1, this.nome);
                 ps.setString(2, this.telefone);
@@ -78,7 +76,7 @@ public class PrestadorDeServicos {
     
     public boolean delete() {
         try (Connection conexao = ConexaoMySQL.getConnection()) {
-            String sql = "DELETE FROM prestadores_de_servicos WHERE id = ?";
+            String sql = "DELETE FROM prestador_de_servicos WHERE id = ?";
             PreparedStatement ps = conexao.prepareStatement(sql);
             ps.setInt(1, this.id);
 
