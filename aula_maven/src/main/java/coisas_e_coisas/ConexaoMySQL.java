@@ -57,7 +57,7 @@ INSERT INTO servicos (nome, descricao, valor) VALUES
 ('Reparos hidráulicos', 'Realização de reparos em encanamentos e tubulações hidráulicas', 150.00),
 ('Reparos em alvenaria', 'Realização de reparos em estruturas e superfícies em alvenaria', 180.00);
 
-CREATE TABLE prestadores_de_servicos (
+CREATE TABLE prestador_de_servicos (
   id INT NOT NULL AUTO_INCREMENT,
   nome VARCHAR(255) NOT NULL,
   telefone VARCHAR(20) NOT NULL,
@@ -65,7 +65,7 @@ CREATE TABLE prestadores_de_servicos (
   PRIMARY KEY (id)
 );
 
-INSERT INTO prestadores_de_servicos (nome, telefone, email) VALUES
+INSERT INTO prestador_de_servicos (nome, telefone, email) VALUES
 ('João da Silva', '(11) 9999-8888', 'joao.silva@coisasecoisas.com'),
 ('Maria dos Santos', '(11) 9888-7777', 'maria.santos@coisasecoisas.com'),
 ('Pedro Oliveira', '(11) 9777-6666', 'pedro.oliveira@coisasecoisas.com');
@@ -89,7 +89,13 @@ INSERT INTO servicos_contratados (data_atendimento, id_cliente, id_servico, valo
 
 SELECT * FROM clientes;
 SELECT * FROM servicos;
+SELECT * FROM prestador_de_servicos;
+SELECT * FROM servicos_contratados;
+SELECT sc.*, c.id as id_cliente, c.nome as cliente_nome,  c.endereco as cliente_endereco, c.telefone as cliente_telefone, c.email as cliente_email, s.nome as servico_nome, 
+s.valor as servico_valor FROM servicos_contratados sc 
+INNER JOIN clientes c ON sc.id_cliente = c.id INNER JOIN servicos s ON sc.id_servico = s.id WHERE sc.id = 1
 #DROP DATABASE coisas_e_coisas;
+
 
 
 */

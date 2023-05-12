@@ -54,7 +54,7 @@ public class Consumidor_main {
         	System.out.println("prestador não encontrado");
         }
         
-       ServicoContratado servicoContratadoEncontrado = ServicoContratado.find_one(prestador.id);
+       ServicoContratado servicoContratadoEncontrado = ServicoContratado.find_one(servicoContratado.id);
         if(servicoContratadoEncontrado != null) {
         	System.out.println("Serviço contratado encontrado! Cliente:" + servicoContratadoEncontrado.cliente.nome + "Serviço:" + servicoContratadoEncontrado.servico.nome);
         }
