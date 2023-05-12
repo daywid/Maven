@@ -16,10 +16,10 @@ public class Consumidor_main {
         // Salvar objetos no banco de dados
         cliente.save();
         servico.save();
-        //prestador.save();
+        prestador.save();
 
         // Criar serviço contratado
-       // ServicoContratado servicoContratado = new ServicoContratado(5, dataAtendimento, cliente, servico, valor);
+       ServicoContratado servicoContratado = new ServicoContratado(5, dataAtendimento, cliente, servico, valor);
       //  servicoContratado.save();
 
         // Buscar um cliente pelo ID

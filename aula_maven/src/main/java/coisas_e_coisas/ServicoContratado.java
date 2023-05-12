@@ -15,8 +15,7 @@ public class ServicoContratado {
     public Servicos servico;
     public double valor;
 
-    public ServicoContratado(int id, Date data_atendimento, Cliente cliente, Servicos servico, double valor) {
-        this.id = id;
+    public ServicoContratado(Date data_atendimento, Cliente cliente, Servicos servico, double valor) {
         this.data_atendimento = data_atendimento;
         this.cliente = cliente;
         this.servico = servico;
@@ -31,10 +30,9 @@ public class ServicoContratado {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                Cliente cliente = new Cliente(rs.getInt("cliente_id"), rs.getString("cliente_nome"), rs.getString("cliente_email"), rs.getString("cliente_telefone"));
-                Servicos servico = new Servicos(rs.getInt("servico_id"), rs.getString("servico_nome"), rs.getString("servico_descricao"), rs.getDouble("servico_valor"));
+                Cliente cliente = new Cliente(rs.getString("cliente_nome"), rs.getString("cliente_endereco"), rs.getString("cliente_telefone", rs.getString("cliente_email"));
+                Servicos servico = new Servicos(rs.getString("servico_nome"), rs.getString("servico_descricao"), rs.getDouble("servico_valor"));
                 return new ServicoContratado(
-                    rs.getInt("id"),
                     rs.getDate("data_atendimento"),
                     cliente,
                     servico,
