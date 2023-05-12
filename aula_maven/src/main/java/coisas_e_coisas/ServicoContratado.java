@@ -24,14 +24,14 @@ public class ServicoContratado {
 
     public static ServicoContratado find_one(int id) {
         try (Connection conexao = ConexaoMySQL.getConnection()) {
-            String sql = "SELECT sc.*, c.id as cliente_id, c.nome as cliente_nome,  c.endereco as cliente_endereco, c.telefone as cliente_telefone, c.email as cliente_email, s.id as servico_id, s.nome as servico_nome, s.valor as servico_valor FROM servicos_contratados sc INNER JOIN clientes c ON sc.cliente_id = c.id INNER JOIN servicos s ON sc.servico_id = s.id WHERE sc.id = ?";
+            String sql = "SELECT sc.*, c.id as id_cliente, c.nome as cliente_nome,  c.endereco as cliente_endereco, c.telefone as cliente_telefone, c.email as cliente_email, s.nome as servico_nome, s.valor as servico_valor FROM servicos_contratados sc INNER JOIN clientes c ON sc.id_cliente = c.id INNER JOIN servicos s ON sc.id_servico = s.id WHERE sc.id = ?";
             PreparedStatement ps = conexao.prepareStatement(sql);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-            	Cliente cliente = new Cliente(rs.getString("cliente_nome"), rs.getString("cliente_endereco"), rs.getString("cliente_telefone"), rs.getString("cliente_email"));
-                Servicos servico = new Servicos(rs.getString("servico_nome"), rs.getString("servico_descricao"), rs.getDouble("servico_valor"));
+                Cliente cliente = new Cliente(rs.getString("cliente_nome"), rs.getString("cliente_endereco"), rs.getString("cliente_telefone"), rs.getString("cliente_email"));
+                Servicos servico = new Servicos(rs.getString("servico_nome"), "", rs.getDouble("servico_valor"));
                 return new ServicoContratado(
                     rs.getDate("data_atendimento"),
                     cliente,
@@ -44,6 +44,7 @@ public class ServicoContratado {
         }
         return null;
     }
+
 
     public void save() {
         try (Connection conexao = ConexaoMySQL.getConnection()) {

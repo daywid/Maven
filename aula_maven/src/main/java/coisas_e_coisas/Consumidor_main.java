@@ -8,29 +8,22 @@ public class Consumidor_main {
     public static void main(String[] args) throws ParseException {
         // Criar instâncias dos objetos
         Cliente cliente = new Cliente( "Joãozinho da Silva","rua almeida 399" ,"(11) 9999-8888","joao.silva@example.com" );
-        
+        // Criar serviço contratado
         Servicos servico = new Servicos("Repaross elétricos", "Realização de reparos em instalações elétricas residenciais e comerciais", 120.00);
       
         PrestadorDeServicos prestador = new PrestadorDeServicos("Joãozinho da Silva", "(11) 9999-8888", "joaoaaaaasilva@coisasecoisas.com");
-        //Date dataAtendimento = new Date();
-        //double valor = 100.00;
-
+      
+        // Analisar a string de data em um objeto Date
+        Date dataAtendimento = new Date();
+        // Criar o serviço contratado com a data e outros parâmetros
+        ServicoContratado servicoContratado = new ServicoContratado(dataAtendimento, cliente, servico, 500.00);
+       
         // Salvar objetos no banco de dados
         cliente.save();
         servico.save();
         prestador.save();
-
-        // Criar serviço contratado
-     // Criar um SimpleDateFormat com o formato da data desejado
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
-        // Analisar a string de data em um objeto Date
-        Date dataAtendimento = sdf.parse("2023-05-02");
-        // Criar o serviço contratado com a data e outros parâmetros
-        ServicoContratado servicoContratado = new ServicoContratado(dataAtendimento, cliente, servico, 500.00);
-
-       servicoContratado.save();
-
+        servicoContratado.save();
+     
         // Buscar um cliente pelo ID
         Cliente clienteEncontrado = Cliente.find_one(cliente.id);
         if (clienteEncontrado != null) {
@@ -68,7 +61,6 @@ public class Consumidor_main {
         else {
         	System.out.println("Serviço contratado não encontrado");
         }
-        
         
     }
 }
