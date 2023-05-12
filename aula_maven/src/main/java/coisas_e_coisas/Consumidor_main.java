@@ -1,9 +1,11 @@
 package coisas_e_coisas;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Consumidor_main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException {
         // Criar instâncias dos objetos
         Cliente cliente = new Cliente( "Joãozinho da Silva","rua almeida 399" ,"(11) 9999-8888","joao.silva@example.com" );
         
@@ -19,8 +21,15 @@ public class Consumidor_main {
         prestador.save();
 
         // Criar serviço contratado
-       ServicoContratado servicoContratado = new ServicoContratado(5, dataAtendimento, cliente, servico, valor);
-      //  servicoContratado.save();
+     // Criar um SimpleDateFormat com o formato da data desejado
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+        // Analisar a string de data em um objeto Date
+        Date dataAtendimento = sdf.parse("2023-05-02");
+        // Criar o serviço contratado com a data e outros parâmetros
+        ServicoContratado servicoContratado = new ServicoContratado(dataAtendimento, cliente, servico, 500.00);
+
+       servicoContratado.save();
 
         // Buscar um cliente pelo ID
         Cliente clienteEncontrado = Cliente.find_one(cliente.id);
@@ -44,7 +53,6 @@ public class Consumidor_main {
         	System.out.println("serviço não encontrado");
         }
         
-        
         PrestadorDeServicos prestadorEncontrado = PrestadorDeServicos.find_one(prestador.id);
         if(prestadorEncontrado != null) {
         	System.out.println("Prestador encontrado: " + prestadorEncontrado.nome);
@@ -52,6 +60,16 @@ public class Consumidor_main {
         else {
         	System.out.println("prestador não encontrado");
         }
+        
+       ServicoContratado servicoContratadoEncontrado = ServicoContratado.find_one(prestador.id);
+        if(servicoContratadoEncontrado != null) {
+        	System.out.println("Serviço contratado encontrado! Cliente:" + servicoContratadoEncontrado.cliente.nome + "Serviço:" + servicoContratadoEncontrado.servico.nome);
+        }
+        else {
+        	System.out.println("Serviço contratado não encontrado");
+        }
+        
+        
     }
 }
 
