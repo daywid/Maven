@@ -23,7 +23,7 @@ public class ServicoContratado {
     }
 
     public static ServicoContratado find_one(int id) {
-        try (Connection conexao = ConexaoMySQL.getConnection()) {
+        try (Connection conexao = ConexaoMySQL.getInstance().getConnection()) {
             String sql = "SELECT sc.*, c.id as id_cliente, c.nome as cliente_nome,  c.endereco as cliente_endereco, c.telefone as cliente_telefone, c.email as cliente_email, s.nome as servico_nome, s.valor as servico_valor FROM servicos_contratados sc INNER JOIN clientes c ON sc.id_cliente = c.id INNER JOIN servicos s ON sc.id_servico = s.id WHERE sc.id = ?";
             PreparedStatement ps = conexao.prepareStatement(sql);
             ps.setInt(1, id);
@@ -47,7 +47,7 @@ public class ServicoContratado {
 
 
     public void save() {
-        try (Connection conexao = ConexaoMySQL.getConnection()) {
+        try (Connection conexao = ConexaoMySQL.getInstance().getConnection()) {
             if (this.id == 0) {
                 // Inserir novo serviço contratado
                 String sql = "INSERT INTO servicos_contratados (data_atendimento, cliente_id, servico_id, valor) VALUES (?, ?, ?, ?)";
@@ -84,7 +84,7 @@ public class ServicoContratado {
     }
     
     public void delete() {
-        try (Connection conexao = ConexaoMySQL.getConnection()) {
+        try (Connection conexao = ConexaoMySQL.getInstance().getConnection()) {
             String sql = "DELETE FROM servicos_contratados WHERE id = ?";
             PreparedStatement ps = conexao.prepareStatement(sql);
             ps.setInt(1, this.id);

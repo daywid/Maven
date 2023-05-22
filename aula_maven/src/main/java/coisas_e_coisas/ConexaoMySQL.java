@@ -6,12 +6,16 @@ import java.sql.SQLException;
 
 public class ConexaoMySQL {
 
+	/*private static ConexaoMySQL instance;
+	private Connection conexao;
+	
+	
     public static Connection getConnection() throws SQLException {
         // informações de conexão com o MySQL
         String url = "jdbc:mysql://localhost:3306/coisas_e_coisas";
         String usuario = "root";
         String senha = "positivo";
-    
+  
         try {
             // carrega o driver JDBC do MySQL
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -22,6 +26,41 @@ public class ConexaoMySQL {
         // estabelece a conexão com o MySQL
         return DriverManager.getConnection(url, usuario, senha);
     }
+  */  
+   
+	//singleton:
+	
+	private static ConexaoMySQL instance;
+    private Connection conexao;
+
+    private ConexaoMySQL() {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            String url = "jdbc:mysql://localhost:3306/seu_banco_de_dados";
+            String usuario = "seu_usuario";
+            String senha = "sua_senha";
+            conexao = DriverManager.getConnection(url, usuario, senha);
+        } catch (ClassNotFoundException | SQLException e) {
+            System.out.println("Erro ao conectar ao banco de dados: " + e.getMessage());
+        }
+    }
+
+    public static ConexaoMySQL getInstance() {
+        if (instance == null) {
+            synchronized (ConexaoMySQL.class) {
+                if (instance == null) {
+                    instance = new ConexaoMySQL();
+                }
+            }
+        }
+        return instance;
+    }
+
+    public Connection getConnection() {
+        return conexao;
+    }
+    
+    
 }
 
 

@@ -20,7 +20,7 @@ public class PrestadorDeServicos {
     }
 
     public static PrestadorDeServicos find_one(int id) {
-        try (Connection conexao = ConexaoMySQL.getConnection()) {
+        try (Connection conexao = ConexaoMySQL.getInstance().getConnection()) {
             String sql = "SELECT * FROM prestador_de_servicos WHERE id = ?";
             PreparedStatement ps = conexao.prepareStatement(sql);
             ps.setInt(1, id);
@@ -40,7 +40,7 @@ public class PrestadorDeServicos {
     }
 
     public void save() {
-        try (Connection conexao = ConexaoMySQL.getConnection()) {
+        try (Connection conexao = ConexaoMySQL.getInstance().getConnection()) {
             if (this.id == 0) {
                 // Inserir novo prestador de serviços
                 String sql = "INSERT INTO prestador_de_servicos (nome, telefone, email ) VALUES (?, ?, ?)";
@@ -75,7 +75,7 @@ public class PrestadorDeServicos {
     }
     
     public boolean delete() {
-        try (Connection conexao = ConexaoMySQL.getConnection()) {
+        try (Connection conexao = ConexaoMySQL.getInstance().getConnection()) {
             String sql = "DELETE FROM prestador_de_servicos WHERE id = ?";
             PreparedStatement ps = conexao.prepareStatement(sql);
             ps.setInt(1, this.id);

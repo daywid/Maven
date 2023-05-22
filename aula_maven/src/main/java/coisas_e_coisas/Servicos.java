@@ -20,7 +20,7 @@ public class Servicos {
     }
 
     public static Servicos find_one(int id) {
-        try (Connection conexao = ConexaoMySQL.getConnection()) {
+        try (Connection conexao = ConexaoMySQL.getInstance().getConnection()) {
             String sql = "SELECT * FROM servicos WHERE id = ?";
             PreparedStatement ps = conexao.prepareStatement(sql);
             ps.setInt(1, id);
@@ -40,7 +40,7 @@ public class Servicos {
     }
 
     public void save() {
-        try (Connection conexao = ConexaoMySQL.getConnection()) {
+        try (Connection conexao = ConexaoMySQL.getInstance().getConnection()) {
             if (this.id == 0) {
                 // Inserir novo serviço
                 String sql = "INSERT INTO servicos (nome, descricao, valor) VALUES (?, ?, ?)";
@@ -75,7 +75,7 @@ public class Servicos {
     }
     
     public boolean delete() {
-        try (Connection conexao = ConexaoMySQL.getConnection()) {
+        try (Connection conexao =ConexaoMySQL.getInstance().getConnection()) {
             String sql = "DELETE FROM servicos WHERE id = ?";
             PreparedStatement ps = conexao.prepareStatement(sql);
             ps.setInt(1, this.id);
