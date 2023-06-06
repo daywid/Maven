@@ -7,14 +7,14 @@ import java.sql.SQLException;
 
 public class Terceiro extends Pessoa {
 
-    // Construtor sem id
-    public Terceiro(String nome, String email) {
-        super(nome, email);
-    }
+    public boolean ativo;
+    public boolean situacao;
 
-    // Construtor com id
-    public Terceiro(int cpf, String nome, String email) {
+    // Construtor com cpf
+    public Terceiro(int cpf, String nome, String email, boolean ativo, boolean situacao) {
         super(cpf, nome, email);
+        this.ativo = true;
+        this.situacao = true;
     }
 
     // Implementação do método find_one para buscar uma pessoa pelo CPF
@@ -38,8 +38,11 @@ public class Terceiro extends Pessoa {
                terceiro = new Terceiro(
                     rs.getInt("cpf"),
                     rs.getString("nome"),
-                    rs.getString("email")
+                    rs.getString("email"),
+                    rs.getBoolean("ativo"),
+                    rs.getBoolean("situacao")
                 );
+                
                 return terceiro;
             }
         } catch (SQLException e) {
@@ -55,34 +58,42 @@ public class Terceiro extends Pessoa {
         try {
             // Obter a conexão com o banco de dados
             conexao = ConexaoMySQL.getInstance().getConnection();
-            
-            if (this.cpf == 0) {
+    
+            // Verificar se o terceiro já existe no banco de dados
+            Terceiro terceiroExistente = Terceiro.find_one(this.cpf);
+    
+            if (terceiroExistente == null) {
                 // Inserir novo terceiro
-                String sql = "INSERT INTO terceiros (nome, email) VALUES (?, ?)";
+                String sql = "INSERT INTO terceiros (cpf, nome, email, ativo, situacao) VALUES (?, ?, ?, ?, ?)";
                 PreparedStatement ps = conexao.prepareStatement(sql);
-                
+    
                 // Definir os valores dos parâmetros na consulta SQL
-                ps.setString(1, this.nome);
-                ps.setString(2, this.email);
-                
+                ps.setInt(1, this.cpf);
+                ps.setString(2, this.nome);
+                ps.setString(3, this.email);
+                ps.setBoolean(4, this.ativo);
+                ps.setBoolean(5, this.situacao);
+    
                 // Executar a atualização no banco de dados
                 int retorno = ps.executeUpdate();
                 System.out.println(retorno);
             } else {
                 // Atualizar terceiro existente
-                String sql = "UPDATE terceiros SET nome = ?, email = ? WHERE cpf = ?";
+                String sql = "UPDATE terceiros SET nome = ?, email = ?, ativo = ?, situacao = ? WHERE cpf = ?";
                 PreparedStatement ps = conexao.prepareStatement(sql);
-                
+    
                 // Definir os valores dos parâmetros na consulta SQL
                 ps.setString(1, this.nome);
                 ps.setString(2, this.email);
-                ps.setInt(3, this.cpf);
-                
+                ps.setBoolean(3, this.ativo);
+                ps.setBoolean(4, this.situacao);
+                ps.setInt(5, this.cpf);
+    
                 // Executar a atualização no banco de dados
                 int retorno = ps.executeUpdate();
                 System.out.println(retorno);
             }
-            
+    
         } catch (SQLException e) {
             System.out.println("Erro ao salvar terceiro: " + e.getMessage());
         }
@@ -112,5 +123,15 @@ public class Terceiro extends Pessoa {
             e.printStackTrace();
         }
         return false;
+    }
+
+    // Método para inativar o terceiro
+    public void inativar() {
+        this.ativo = false;
+    }
+    
+    // Método para encerrar o contrato do terceiro
+    public void encerrar_contrato() {
+        this.situacao = false;
     }
 }

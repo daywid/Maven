@@ -15,17 +15,8 @@ public class Gerente extends Pessoa {
     public String departamento;
     public double gratificacao;
 
-    // Construtor sem id
-    public Gerente(String nome, String email, double salario, Date aniversario, String telefone, String departamento, double gratificacao) {
-        super(nome, email);
-        this.salario = salario;
-        this.aniversario = aniversario;
-        this.telefone = telefone;
-        this.departamento = departamento;
-        this.gratificacao = gratificacao;
-    }
 
-    // Construtor com id
+    // Construtor com cpf
     public Gerente(int cpf, String nome, String email, double salario, Date aniversario, String telefone, String departamento, double gratificacao) {
         super(cpf, nome, email);
         this.salario = salario;
@@ -71,14 +62,16 @@ public class Gerente extends Pessoa {
     }
 
 
-    @Override
     public void save() {
         Connection conexao = null;
         try {
             // Obter a conexão com o banco de dados
             conexao = ConexaoMySQL.getInstance().getConnection();
 
-            if (this.cpf == 0) {
+             // Verificar se o gerente já existe no banco de dados
+             Gerente gerenteExistente = Gerente.find_one(this.cpf);
+
+            if (gerenteExistente == null) {
                 // Inserir novo gerente
                 String sql = "INSERT INTO gerentes (cpf, nome, email, salario, aniversario, telefone, departamento, gratificacao) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
                 PreparedStatement ps = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -97,11 +90,6 @@ public class Gerente extends Pessoa {
                 int retorno = ps.executeUpdate();
                 System.out.println(retorno);
 
-                // Obter o CPF gerado automaticamente pelo banco de dados
-                ResultSet rs = ps.getGeneratedKeys();
-                if (rs.next()) {
-                    this.cpf = rs.getInt(1);
-                }
             } else {
                 // Atualizar gerente existente
                 String sql = "UPDATE gerentes SET nome = ?, email = ?, salario = ?, aniversario = ?, telefone = ?, departamento = ?, gratificacao = ? WHERE cpf = ?";
@@ -127,7 +115,6 @@ public class Gerente extends Pessoa {
         }
     }
 
-    @Override
     public boolean delete() {
         Connection conexao = null;
         try {
@@ -153,5 +140,8 @@ public class Gerente extends Pessoa {
         return false;
     }
 
+    public double calcular_bônus() {
+        return salario * 0.3; // Retorna 30% do salário do gerente como bônus
+    }
    
 }

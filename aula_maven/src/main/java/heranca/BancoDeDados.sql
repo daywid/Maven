@@ -1,6 +1,6 @@
 create database heranca;
 
-use database heranca;
+use heranca;
 
 -- Criação da tabela 'funcionarios'
 CREATE TABLE funcionarios (
@@ -40,10 +40,14 @@ INSERT INTO gerentes (cpf, nome, email, salario, aniversario, telefone, departam
 CREATE TABLE terceiros (
   cpf INT PRIMARY KEY,
   nome VARCHAR(100),
-  email VARCHAR(100)
+  email VARCHAR(100),
+  ativo BOOLEAN DEFAULT true,
+  situacao BOOLEAN DEFAULT true
 );
 
 -- Inserts para 'terceiros'
 INSERT INTO terceiros (cpf, nome, email) VALUES 
 (777888999, 'Fernando Pereira', 'fernando.pereira@example.com'),
 (222333444, 'Juliana Lima', 'juliana.lima@example.com');
+
+SELECT * FROM terceiros;

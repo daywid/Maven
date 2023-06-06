@@ -14,15 +14,6 @@ public class Funcionario extends Pessoa {
     public String telefone;
     public String departamento;
 
-    // Construtor sem cpf
-    public Funcionario(String nome, String email, double salario, Date aniversario, String telefone, String departamento) {
-        super(nome, email);
-        this.salario = salario;
-        this.aniversario = aniversario;
-        this.telefone = telefone;
-        this.departamento = departamento;
-    }
-
     // Construtor com cpf
     public Funcionario(int cpf, String nome, String email, double salario, Date aniversario, String telefone, String departamento) {
         super(cpf, nome, email);
@@ -72,28 +63,27 @@ public class Funcionario extends Pessoa {
                 // Obter a conexão com o banco de dados
                 conexao = ConexaoMySQL.getInstance().getConnection();
         
-                if (this.cpf == 0) {
+                // Verificar se o funcionário já existe no banco de dados
+                Funcionario funcionarioExistente = Funcionario.find_one(this.cpf);
+
+                if (funcionarioExistente == null) {
                     // Inserir novo funcionário
-                    String sql = "INSERT INTO funcionarios (nome, email, salario, aniversario, telefone, departamento) VALUES (?, ?, ?, ?, ?, ?)";
+                    String sql = "INSERT INTO funcionarios (cpf, nome, email, salario, aniversario, telefone, departamento) VALUES (?, ?, ?, ?, ?, ?, ?)";
                     PreparedStatement ps = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         
                     // Definir os valores dos parâmetros na consulta SQL
-                    ps.setString(1, this.nome);
-                    ps.setString(2, this.email);
-                    ps.setDouble(3, this.salario);
-                    ps.setDate(4, new java.sql.Date(this.aniversario.getTime()));
-                    ps.setString(5, this.telefone);
-                    ps.setString(6, this.departamento);
+                    ps.setInt(1, cpf);
+                    ps.setString(2, this.nome);
+                    ps.setString(3, this.email);
+                    ps.setDouble(4, this.salario);
+                    ps.setDate(5, new java.sql.Date(this.aniversario.getTime()));
+                    ps.setString(6, this.telefone);
+                    ps.setString(7, this.departamento);
         
                     // Executar a atualização no banco de dados e obter as chaves geradas automaticamente
                     int retorno = ps.executeUpdate();
                     System.out.println(retorno);
-        
-                    // Obter o CPF gerado automaticamente pelo banco de dados
-                    ResultSet rs = ps.getGeneratedKeys();
-                    if (rs.next()) {
-                        this.cpf = rs.getInt(1);
-                    }
+                    
                 } else {
                     // Atualizar funcionário existente
                     String sql = "UPDATE funcionarios SET nome = ?, email = ?, salario = ?, aniversario = ?, telefone = ?, departamento = ? WHERE cpf = ?";
@@ -115,8 +105,7 @@ public class Funcionario extends Pessoa {
             } catch (SQLException e) {
                 System.out.println("Erro ao salvar funcionário: " + e.getMessage());
             }
-        }
-        
+        }        
 
         public boolean delete() {
             Connection conexao = null;
