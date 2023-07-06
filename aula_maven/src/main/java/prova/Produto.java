@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 // b777c6a8ff8c44d7a64cc432d0a3ca40
-public class abstract Produto {
+public abstract class Produto {
 
 	public int codigo;
 	public String nome;
